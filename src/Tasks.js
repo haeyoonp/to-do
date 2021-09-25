@@ -1,33 +1,6 @@
 import { EasybaseProvider, useEasybase } from 'easybase-react';
 import { useEffect, useState } from "react";
-
-
-function AddTaskButton() {
-  const { db, useReturn} = useEasybase();
-
-  const handleAddTaskClick = async () => {
-    try {
-      const inTitle = prompt("Enter Title");
-      const inDescription = prompt("Enter Description");
-      const inComplete = false;
-      const inLastEdit = Date();
-      if (!inTitle || !inDescription) return;
-
-      await db('TASKS').insert({
-        title: inTitle,
-        content: inDescription,
-        complete: inComplete,
-        lastEdit: inLastEdit
-      }).one();
-    } catch (_) {
-      alert("Error on input format");
-    }
-  }
-
-  return (
-    <button onClick={handleAddTaskClick} className="AddTaskButton">+ Add Task </button>
-  );
-}
+import AddTaskButton from './AddTaskButton.js';
 
 function Tasks() {
     const [task, setTaskData] = useState([]);
@@ -57,11 +30,10 @@ function Tasks() {
     }
 
     const renderBody = () => {
-      console.log(JSON.stringify(task));
       return task && task.map(({ _key, title, content, complete, lastedit },index) => {
           return (
               <tr key={_key}>
-                  <td>{index}</td>
+                  <td>{index+1}</td>
                   <td>{title}</td>
                   <td>{content}</td>
                   <td><input type="checkbox" checked={complete? "selected" : ""}/></td>
@@ -77,7 +49,7 @@ function Tasks() {
     return (
       <div>
           <AddTaskButton />
-          <h1 id='title'>Task List</h1>
+          <h2 id='title'>Completed Tasks</h2>
           <table id='task' className="styled-table">
               <thead>
                   <tr>{renderHeader()}</tr>
@@ -86,6 +58,7 @@ function Tasks() {
                   {renderBody()}
               </tbody>
           </table>
+          <h2 id='title'>In-Process Tasks</h2>
       </div>
   )
 }
