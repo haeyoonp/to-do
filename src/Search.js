@@ -31,7 +31,7 @@ function Search() {
         if(task && task.length == 0)
             return <div>No results found</div>;
 
-        return task && task.length == 0 && task.map(({ title, content, complete, lastedit }) => {
+        return task && task.length != 0 && task.map(({ title, content, complete, lastedit }) => {
                 return (
                     <tr>
                         <td>{title}</td>

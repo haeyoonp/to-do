@@ -20,11 +20,11 @@ function AddTaskButton() {
     } catch (_) {
       alert("Error on input format");
     }
-  }
+  };
 
   return (
     <button onClick={handleAddTaskClick} className="AddTaskButton">+ Add Task </button>
   );
-}
+};
 
 export default AddTaskButton;

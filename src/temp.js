@@ -11,8 +11,8 @@ function Tasks(){
 
     const mounted = async() => {
       const ebData = await db("TASKS").return().limit(10).all();
-      const completeData = await db("TASKS").return().where(e.eq("complete",true)).all();
-      const todoData = await db("TASKS").return().where(e.eq("complete",false)).all();
+      const completeData = ebData.where(e.eq("complete",true)).all();
+      const todoData = ebData.where(e.eq("complete",false)).all();
       setTaskData(completeData);
       setCompleteTask(completeData);
       setTodoTask(todoData);
@@ -42,7 +42,7 @@ function Tasks(){
                   <td>{index+1}</td>
                   <td>{title}</td>
                   <td>{content}</td>
-                  <td className="complete">Complete</td>
+                  <td>Complete</td>
                   <td>{lastedit.substring(0,10)}</td>
                   <td className='opration'>
                       <button onClick={() => removeData(_key)}>delete</button>
@@ -67,10 +67,10 @@ function Tasks(){
                   <td>{index+1}</td>
                   <td>{title}</td>
                   <td>{content}</td>
-                  <td className="imcomplete">Incomplete</td>
+                  <td><input type="checkbox" checked={complete? "selected" : ""}/></td>
                   <td>{lastedit.substring(0,10)}</td>
                   <td className='opration'>
-                      <button onClick={() => removeData(_key)}>edit</button>
+                      <button onClick={() => removeData(_key)}>delete</button>
                   </td>
               </tr>
           );
