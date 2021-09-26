@@ -1,12 +1,13 @@
 import './App.css';
 import Tasks from './Tasks';
-import Search from './Search.js';
-import { EasybaseProvider, useEasybase } from 'easybase-react';
-import { useEffect } from 'react';
+import SearchBar from './SearchBar.js';
+import { EasybaseProvider} from 'easybase-react';
+import { useState } from "react";
 import ebconfig from './ebconfig';
 
 
 function App() {
+  const [input, setInput] = useState('');
   return (
     <div className="App">
       <header className="App-header">
@@ -14,8 +15,8 @@ function App() {
       </header>
       <body className="App-body">
         <EasybaseProvider ebconfig={ebconfig}>
-          <Search />
-          <Tasks />
+          <SearchBar setInput={setInput}/>
+          <Tasks input={input}/>
         </EasybaseProvider>
       </body>
     </div>
