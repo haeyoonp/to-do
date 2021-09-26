@@ -1,5 +1,8 @@
 import { useEasybase } from 'easybase-react';
 import { useEffect, useState } from "react";
+import CompleteList from './CompleteList.js';
+import TodoList from './TodoList.js';
+
 
 const Tasks = ({input}) => {
     const [completeTask, setCompleteTask] = useState([]);
@@ -12,7 +15,7 @@ const Tasks = ({input}) => {
       setCompleteTask(completeData);
       setTodoTask(todoData);
     }
-   
+
     const removeTask = async(key) => {
       await db('TASKS', true).delete().where({ _key : key }).one();
       mounted();
@@ -56,21 +59,13 @@ const Tasks = ({input}) => {
 
     const renderTaskList = (complete) => {
       var data;
-      if(complete)
+      if(complete){
         data = completeTask;
-      else
+        return <CompleteList data={data} removeTask={removeTask}/>
+      }else{
         data = todoTask;
-      return data && data.map(({ _key, content}) => {
-          return (
-            <div className="single-task">
-                <button className="check-btn" onClick={() => checkTask(_key)}></button>
-                <input key={_key} className="task-input" onFocus={(e) => {console.log('Focused on input');}} 
-                onBlur={(e) => {saveTask(_key, e.target.value)}}
-                defaultValue={content}></input>
-                <button className="delete-btn" onClick={() => removeTask(_key)}></button>
-            </div>
-          );
-      });
+        return <TodoList data={data} taskAction={[checkTask, removeTask, saveTask]} />
+      }
     }
 
     return (
