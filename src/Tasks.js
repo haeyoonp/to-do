@@ -1,11 +1,11 @@
 import { EasybaseProvider, useEasybase } from 'easybase-react';
 import { useEffect, useState } from "react";
-import AddTaskButton from './AddTaskButton.js';
 
 function Tasks(){
     const [completeTask, setCompleteTask] = useState([]);
     const [todoTask, setTodoTask] = useState([]);
-    const [task, setTaskData] = useState([]);
+    const [task, setTask] = useState([]);
+    const [innput, setInput] = useState("");
     const { db, e, useReturn} = useEasybase();
     //const { task } = useReturn(() => db("TASKS").return().limit(10).all(), []);
 
@@ -13,91 +13,68 @@ function Tasks(){
       const ebData = await db("TASKS").return().limit(10).all();
       const completeData = await db("TASKS").return().where(e.eq("complete",true)).all();
       const todoData = await db("TASKS").return().where(e.eq("complete",false)).all();
-      setTaskData(completeData);
+      setTask(ebData);
       setCompleteTask(completeData);
       setTodoTask(todoData);
-    };
+    }
 
-    const removeData = async(key) => {
+    const removeTask = async(key) => {
       const del = await db('TASKS', true).delete().where({ _key : key }).one();
       mounted();
    }
 
+   const addTask = async() => {
+    const AddedElement = {"_key":"new", "content":null, "complete":false, "editDate":Date()}
+    setTodoTask(todoTask => ([...todoTask, AddedElement]));
+  }
+
+    const saveTask = async(key, content) => {
+      console.log(key +" "+ content);
+      if(key == "new")
+        await db('TASKS').insert({content: content,complete: false,}).one();
+      else
+        await db('TASKS').where({_key:key}).set({content: content,complete: false,}).one();
+    }
+
+    const checkTask = async(key) => {
+      await db('TASKS').where({_key:key}).set({complete: true}).one();
+      mounted();
+    }
+
     useEffect(() => {
         mounted();
       }, []);
-    
-    const renderCompleteHeader = () => {
-        let headerElement = ['No.', 'Title', 'Content', 'status', 'complete date'];
 
-        return headerElement.map((key, index) => {
-            return <th key={index}>{key.toUpperCase()}</th>
-        });
-    }
-
-    const renderCompleteBody = () => {
-      return completeTask && completeTask.map(({ _key, title, content, complete, lastedit },index) => {
+    const renderTaskList = (complete) => {
+      var data;
+      if(complete)
+        data = completeTask;
+      else
+        data = todoTask;
+      return data && data.map(({ _key, content}) => {
           return (
-              <tr key={_key}>
-                  <td>{index+1}</td>
-                  <td>{title}</td>
-                  <td>{content}</td>
-                  <td className="complete">Complete</td>
-                  <td>{lastedit.substring(0,10)}</td>
-                  <td className='opration'>
-                      <button onClick={() => removeData(_key)}>delete</button>
-                  </td>
-              </tr>
-          );
-      });
-    }
-
-    const renderTodoHeader = () => {
-      let headerElement = ['No.', 'Title', 'Content', 'status', 'last edit'];
-
-      return headerElement.map((key, index) => {
-          return <th key={index}>{key.toUpperCase()}</th>
-      });
-  }
-
-    const renderTodoBody = () => {
-      return todoTask && todoTask.map(({ _key, title, content, complete, lastedit },index) => {
-          return (
-              <tr key={_key}>
-                  <td>{index+1}</td>
-                  <td>{title}</td>
-                  <td>{content}</td>
-                  <td className="imcomplete">Incomplete</td>
-                  <td>{lastedit.substring(0,10)}</td>
-                  <td className='opration'>
-                      <button onClick={() => removeData(_key)}>edit</button>
-                  </td>
-              </tr>
+            <div className="single-task">
+                <button className="check-btn" onClick={() => checkTask(_key)}></button>
+                <input className="task-input" onFocus={(e) => {console.log('Focused on input');}} 
+                onBlur={(e) => {saveTask(_key, e.target.value)}}
+                defaultValue={content}></input>
+                <button className="delete-btn" onClick={() => removeTask(_key)}></button>
+            </div>
           );
       });
     }
 
     return (
-      <div>
-          <h2>Complete Tasks</h2>
-          <table id='completed' className="styled-table">
-              <thead>
-                  <tr>{renderCompleteHeader()}</tr>
-              </thead>
-              <tbody>
-                  {renderCompleteBody()}
-              </tbody>
-          </table>
-          <h2>To-Do Tasks</h2>
-          <table id='todo' className="styled-table">
-              <thead>
-                  <tr>{renderTodoHeader()}</tr>
-              </thead>
-              <tbody>
-                  {renderTodoBody()}
-              </tbody>
-          </table>
-          <AddTaskButton />
+      <div className="task-body">
+        <div className="task-list">
+          <h2>Completed</h2>
+          <div>{renderTaskList(true)}</div>
+        </div>
+        <div className="task-list">
+          <h2>To-Do List</h2>
+          <div>{renderTaskList(false)}</div>
+          <button className="add-btn" onClick={() => addTask()}></button>
+        </div>
       </div>
   );
 }

@@ -20,7 +20,7 @@
 .App-body {
   display: flex;
   flex-direction: column;
-  align-items: left;
+  align-items: center;
   justify-content: center;
   padding: 60px 80px 80px 80px;
 }
@@ -36,6 +36,81 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.single-task{
+  display: flex;
+  flex-direction: row;
+  align-items: center
+}
+
+.task-input{
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid lightgray;
+    height: 3em;
+}
+
+.task-input:focus{
+  border-bottom: 1px solid black;
+  outline: none;
+}
+
+.task-body{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.task-list{
+  width: -webkit-fill-available;
+  margin: 2em 2em 2em 2em;
+}
+
+.check-btn{
+  background-image: url("./asset/check.png");
+  border: none;
+  background-color: transparent;
+  width: 32px;
+  height: 32px;
+}
+
+.check-btn:hover{
+  background-image: url("./asset/check_hover.png");
+  cursor:pointer;
+  width: 32px;
+  height: 32px;
+}
+
+.delete-btn{
+  background-image: url("./asset/delete.png");
+  border: none;
+  background-color: transparent;
+  width: 16px;
+  height: 16px;
+}
+
+.delete-btn:hover{
+  background-image: url("./asset/delete_hover.png");
+  cursor:pointer;
+  width: 16px;
+  height: 16px;
+}
+
+.add-btn{
+  background-image: url("./asset/plus.png");
+  border: none;
+  background-color: transparent;
+  width: 32px;
+  height: 32px;
+}
+
+.add-btn:hover {
+  background-image: url("./asset/plus_hover.png");
+  cursor:pointer;
+  width: 32px;
+  height: 32px;
 }
 
 .styled-table {

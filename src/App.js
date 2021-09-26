@@ -10,7 +10,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        To-Do Lists
+        Simple To-do Application
       </header>
       <body className="App-body">
         <EasybaseProvider ebconfig={ebconfig}>
