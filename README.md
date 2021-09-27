@@ -1,19 +1,20 @@
 ## starting the proejct ##
 in the base repository of the project, open terminal and type command for these cases : 
 
-### to start the project
+### (1) to start the project
+
 npm start
 
-### missing module error
+### (2) missing module error
 in case of missing module error : 
 
 use these shell commmands depending on what module is missing:
-npm install react-scripts 
-npm install react 
-npm install react-beautiful-dnd 
-npm install easybase-react
+- npm install react-scripts 
+- npm install react 
+- npm install react-beautiful-dnd 
+- npm install easybase-react
 
-### other possible error
+### (3) other possible error
 in case of "Attempting to bind to HOST environment variable : xxx " error :
 
 unset HOST
