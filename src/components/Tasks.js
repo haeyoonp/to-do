@@ -29,6 +29,9 @@ const Tasks = ({input}) => {
         setCompleteTask((completeTask) => (completeData));
       }else{
         const todoData = allData.filter(function(task){ return task && task.complete===false });
+        todoData.sort(function(a, b) {
+          return parseInt(a.id) - parseInt(b.id);
+        });
         setTodoTask((todoTask) => (todoData));
       }
       await db('TASKS', true).delete().where({ _key : key }).one();

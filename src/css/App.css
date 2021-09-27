@@ -111,7 +111,7 @@
 }
 
 .delete-btn{
-  background-image: url("./asset/delete.png");
+  background-image: url("../asset/delete.png");
   border: none;
   background-color: transparent;
   width: 16px;
@@ -120,7 +120,7 @@
 }
 
 .delete-btn:hover{
-  background-image: url("./asset/delete_hover.png");
+  background-image: url("../asset/delete_hover.png");
   cursor:pointer;
   width: 16px;
   height: 16px;

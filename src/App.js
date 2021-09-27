@@ -1,6 +1,6 @@
-import './App.css';
-import Tasks from './Tasks';
-import SearchBar from './SearchBar.js';
+import './css/App.css';
+import Tasks from './components/Tasks';
+import SearchBar from './components/SearchBar';
 import { EasybaseProvider} from 'easybase-react';
 import { useState } from "react";
 import ebconfig from './ebconfig';
