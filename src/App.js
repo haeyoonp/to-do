@@ -13,12 +13,12 @@ function App() {
       <header className="App-header">
         Simple To-do Application
       </header>
-      <body className="App-body">
+      <div className="App-body">
         <EasybaseProvider ebconfig={ebconfig}>
           <SearchBar setInput={setInput}/>
           <Tasks input={input}/>
         </EasybaseProvider>
-      </body>
+      </div>
     </div>
   );
 };
