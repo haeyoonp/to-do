@@ -3,10 +3,9 @@ in the base repository of the project, open terminal and type command for these 
 
 ### (1) to start the project
 
-npm start
+- npm start
 
 ### (2) missing module error
-in case of missing module error : 
 
 use these shell commmands depending on what module is missing:
 - npm install react-scripts 
