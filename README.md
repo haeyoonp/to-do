@@ -17,7 +17,7 @@ use these shell commmands depending on what module is missing:
 ### (3) other possible error
 in case of "Attempting to bind to HOST environment variable : xxx " error :
 
-unset HOST
+- unset HOST
 
 
 ## features of the project ##
