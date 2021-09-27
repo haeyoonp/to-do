@@ -83,7 +83,7 @@ const Tasks = ({input}) => {
           <div className="task-list">
             <h2>To-Do List</h2>
             <div>{renderTaskList(false)}</div>
-            <button className="add-btn" onClick={() => addTask()}></button>
+            <button className="add-btn" onClick={() => addTask()}>+</button>
           </div>
         </div>
   );
