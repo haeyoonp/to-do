@@ -1,7 +1,6 @@
 
 
 const CompleteList = ({data, removeTask}) => {
-      
     return data && data.map(({ _key, content}) => {
         return (
             <div className="single-task">

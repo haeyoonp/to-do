@@ -12,6 +12,9 @@ const Tasks = ({input}) => {
     const mounted = async() => {
       const completeData = await db("TASKS").return().where(e.eq("complete",true)).all();
       const todoData = await db("TASKS").return().where(e.eq("complete",false)).all();
+      todoData.sort(function(a, b) {
+        return parseInt(a.id) - parseInt(b.id);
+      });
       setCompleteTask(completeData);
       setTodoTask(todoData);
     }
@@ -33,6 +36,12 @@ const Tasks = ({input}) => {
         await db('TASKS').where({_key:key}).set({content: content,complete: false}).one();
     }
 
+    const updateIndexTask = async(items) => {
+      items.map( async ({ _key, content}, index) => {
+        await db('TASKS').where({_key:_key}).set({id: index}).one();
+      });
+   }
+
     const searchTask = async (input) => {
       if(!input || input === ""){  
         mounted();
@@ -45,13 +54,9 @@ const Tasks = ({input}) => {
   }
 
     const checkTask = async(key) => {
-      await db('TASKS').where({_key:key}).set({complete: true}).one();
+      await db('TASKS').where({_key:key}).set({complete: true, id : null}).one();
       mounted();
     }
-
-    useEffect(() => {
-        mounted(); 
-      }, [])
 
     useEffect(() => {
         searchTask(input);  
@@ -64,7 +69,7 @@ const Tasks = ({input}) => {
         return <CompleteList data={data} removeTask={removeTask}/>
       }else{
         data = todoTask;
-        return <TodoList data={data} taskAction={[checkTask, removeTask, saveTask]} />
+        return <TodoList data={data} taskAction={[checkTask, removeTask, saveTask, updateIndexTask, setTodoTask]} />
       }
     }
 
